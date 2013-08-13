@@ -1,0 +1,57 @@
+//
+// Mixins
+// --------------------------------------------------
+// Override Bootstrap defaults
+// --------------------------------------------------
+
+// Creates the container
+.container(@width) when (isstring(@width)) and (@width = "tablet") {
+    max-width: @container-tablet;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container(@width) when (isstring(@width)) and (@width = "desktop") {
+    max-width: @container-desktop;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container(@width) when (isstring(@width)) and (@width = "large-desktop") {
+    max-width: @container-large-desktop;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container(@width) when (isunit(@width)) {
+    max-width: @width;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Creates a wrapper for a series of columns
+// Usage: .row(0)
+.row(@c) when (@c >= 0) {
+    // Then clear the floated columns
+    .clearfix();
+}
+
+// Generate the columns
+.col(@columns; @gutter: @bl-grid-gutter-width) when (@columns > 0) {
+    position: relative;
+    float: left;
+    width: percentage((@columns / @grid-columns));
+    // Prevent columns from collapsing when empty
+    min-height: 1px;
+    // Inner gutter via padding
+    padding-left:  (@gutter / 2);
+    padding-right: (@gutter / 2);
+}
+
+// Generate the column offsets
+.col-offset(@columns) when (@columns > 0) {
+    margin-left: percentage((@columns / @grid-columns));
+}
+.col-push(@columns) when (@columns > 0) {
+    left: percentage((@columns / @grid-columns));
+}
+.col-pull(@columns) when (@columns > 0) {
+    right: percentage((@columns / @grid-columns));
+}
