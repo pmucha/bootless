@@ -1,57 +1,27 @@
 //
 // Mixins
 // --------------------------------------------------
-// Override Bootstrap defaults
+// Provide Bootstrap defaults in case you do not
 // --------------------------------------------------
 
-// Creates the container
-.container(@width) when (isstring(@width)) and (@width = "tablet") {
-    max-width: @container-tablet;
-    margin-left: auto;
-    margin-right: auto;
-}
-.container(@width) when (isstring(@width)) and (@width = "desktop") {
-    max-width: @container-desktop;
-    margin-left: auto;
-    margin-right: auto;
-}
-.container(@width) when (isstring(@width)) and (@width = "large-desktop") {
-    max-width: @container-large-desktop;
-    margin-left: auto;
-    margin-right: auto;
-}
-.container(@width) when (isunit(@width)) {
-    max-width: @width;
-    margin-left: auto;
-    margin-right: auto;
-}
 
-// Creates a wrapper for a series of columns
-// Usage: .row(0)
-.row(@c) when (@c >= 0) {
-    // Then clear the floated columns
-    .clearfix();
-}
-
-// Generate the columns
-.col(@columns; @gutter: @bl-grid-gutter-width) when (@columns > 0) {
-    position: relative;
-    float: left;
-    width: percentage((@columns / @grid-columns));
-    // Prevent columns from collapsing when empty
-    min-height: 1px;
-    // Inner gutter via padding
-    padding-left:  (@gutter / 2);
-    padding-right: (@gutter / 2);
-}
-
-// Generate the column offsets
-.col-offset(@columns) when (@columns > 0) {
-    margin-left: percentage((@columns / @grid-columns));
-}
-.col-push(@columns) when (@columns > 0) {
-    left: percentage((@columns / @grid-columns));
-}
-.col-pull(@columns) when (@columns > 0) {
-    right: percentage((@columns / @grid-columns));
+// Clearfix
+// Source: http://nicolasgallagher.com/micro-clearfix-hack/
+//
+// For modern browsers
+// 1. The space content is one way to avoid an Opera bug when the
+//    contenteditable attribute is included anywhere else in the document.
+//    Otherwise it causes space to appear at the top and bottom of elements
+//    that are clearfixed.
+// 2. The use of `table` rather than `block` is only necessary if using
+//    `:before` to contain the top-margins of child elements.
+.clearfix() {
+  &:before,
+  &:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+  }
+  &:after {
+    clear: both;
+  }
 }
