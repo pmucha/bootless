@@ -2,15 +2,19 @@
 // Grid system
 // --------------------------------------------------
 
-//**
-//*  Substitute for `.container` CSS class. Creates a centered container usually for `.row`-s.
-//*  Usage: There are specific containers for specific devices, eg `#BL>.container("tablet")`
-//*  for `@media (min-width: @screen-tablet) and (max-width: @screen-tablet-max) { ... }`.
-//*  Since the `#BL>.col(@columns)` layout is fluid you can set up whatever container size you want,
-//*  eg. `#BL>.container(500px)`, `#BL>.container(80%)` or whatever unit size you wish to use.
-//*
-//*  @param width "tablet"|"desktop"|"large-desktop"|standard unit width
-//**
+/**
+Substitute for `.container` CSS class. Creates a centered container usually for `.row`-s.
+
+**Usage:** There are prebuilt containers for specific devices, eg `#BL>.container("tablet")`
+for `@media (min-width: @screen-tablet) and (max-width: @screen-tablet-max) { ... }`.
+Since the `#BL>.col(@columns)` layout is fluid you can set up whatever container size you want,
+eg. `#BL>.container(500px)`, `#BL>.container(80%)`, even the
+`#BL>.container(@container-tablet)` if you do not like the string argument solution, or
+whatever unit size you wish to use.
+
+@param width "tablet"|"desktop"|"large-desktop"|standard unit width
+@depends @container-tablet,@container-desktop,@container-large-desktop
+**/
 .container(@width) when (isstring(@width)) and (@width = "tablet") {
     max-width: @container-tablet;
     margin-left: auto;
@@ -34,33 +38,39 @@
     margin-right: auto;
 }
 
-//**
-//* Substitue for `.row` CSS class. Creates a wrapper for a series of `#BL>.col`-s.
-//* Usage: Simply enter `#BL>row()` to wrap the inner columns.
-//*
-//* The code for the row is much simplified, since it does not use the gutter,
-//* and it does not rely on CSS classes anymore the only thing that is left is
-//* the clearfix. If you want to have the gutter revert to Bootstrap's
-//* `.make-row()` and `.make-column()` mixins.
-//**
+/**
+Substitue for `.row` CSS class. Creates a wrapper for a series of `#BL>.col`-s.
+
+**Usage:** Simply enter `#BL>row()` to wrap the inner columns.
+
+**Note:** The code for the row is much simplified, since it does not use the gutter,
+and it does not rely on CSS classes anymore. The only thing that is left is
+the clearfix. If you want to have the gutter revert to Bootstrap's
+`.make-row()` and `.make-*-column()` mixins.
+
+@depends .clearfix
+**/
 .row() {
     // Then clear the floated columns
     .clearfix();
 }
 
-//**
-//* Substitue for `.col-1` to `.col-12` CSS classes. Generates the columns.
-//* Usage: Simply enter `#BL>col(@columns)` to generate the column.
-//* The parameter defines how wide should the column be. If the whole
-//* row can be divided to @grid-columns (default 12) parts, then your column
-//* will have @columns of them.
-//*
-//* The idea is the same as in Bootstrap, and the code is roughly the same,
-//* except *it does not use the gutter* (inner left/right padding). If you
-//* want to have it revert to Bootstrap's `.make-column()` and `.make-row()` mixins.
-//*
-//* @param columns colspan of the column, from 1 to @grid-columns (default 12)
-//**
+/**
+Substitue for `.col-*-1` to `.col-*-12` CSS classes. Generates the columns.
+
+**Usage:** Simply enter `#BL>col(@columns)` to generate the column.
+The parameter defines how wide should the column be. If the whole
+row can be divided to `@grid-columns` (default 12) parts, then your column
+will have `@columns` parts of them.
+
+The idea is the same as in Bootstrap, and the code is roughly the same,
+except *it does not use the gutter* (inner left/right padding). If you
+want to have it back revert to Bootstrap's `.make-*-column()` and
+`.make-row()` mixins.
+
+@param columns defines how wide the column spans, from 1 to `@grid-columns` (default 12)
+@depends @grid-columns
+**/
 .col(@columns) when (isnumber(@columns)) and (@columns > 0) {
     position: relative;
     float: left;
@@ -69,34 +79,40 @@
     min-height: 1px;
 }
 
-//**
-//* Substitue for `.col-offset` CSS class. Generates column offset.
-//* This means an empty space on the left of your column. Counted the same as
-//* in generating columns.
-//*
-//* @param columns span of the offset
-//**
+/**
+Substitue for `.col-*-offset-*` CSS classes. Generates column offset.
+This means an empty space on the left of your column. Counted the same as
+in generating columns.
+
+@param columns defines how wide the offset spans
+@depends @grid-columns
+**/
 .col-offset(@columns) when (@columns > 0) {
     margin-left: percentage((@columns / @grid-columns));
 }
 
-//**
-//* Substitute for `.col-push` CSS class. Changes the visual horizontal position
-//* of the column. When used with `.col-pull()` you can change position of columns
-//* for the user inspite of their position in DOM.
-//*
-//* @param columns span of the left push
-//**
+/**
+Substitute for `.col-*-push-*` CSS class. Changes the visual horizontal position
+of the column. When used with `.col-pull()` mixin you can change position of columns
+for the user inspite of their position in DOM.
+
+@param columns defines how many columns should this column be pushed to the right side
+@depends @grid-columns
+@see #BL>.col-pull()
+**/
 .col-push(@columns) when (@columns > 0) {
     left: percentage((@columns / @grid-columns));
 }
 
-//**
-//* Substitute for `.col-pull` CSS class.
-//*
-//* @param columns span of the left pull
-//* @see .col-push
-//**
+/**
+Substitute for `.col-*-pull-*` CSS class. Changes the visual horizontal position
+of the column. When used with `.col-push()` mixin you can change position of columns
+for the user inspite of their position in DOM.
+
+@param columns defines how many columns should this column be pulled to the left side
+@depends @grid-columns
+@see #BL>.col-push()
+**/
 .col-pull(@columns) when (@columns > 0) {
     right: percentage((@columns / @grid-columns));
 }

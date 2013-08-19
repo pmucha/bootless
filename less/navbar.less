@@ -3,6 +3,21 @@
 // --------------------------------------------------
 
 // Base classes
+
+/**
+Substitute for `.navbar` CSS class.
+
+**Usage:** Protected mixin; it is for internal use only, and is intended to
+be placed in other mixins, so there is no need to repeat the way it is used
+in HTML, eg.: `<nav class="navbar navbar-fixed-top">`, but only `<nav>` and:
+```
+nav {
+    #BL>.navbar("fixed-top");
+}
+```
+
+@depends @navbar-height,@navbar-padding-horizontal,@navbar-bg,@navbar-border-radius
+**/
 ._navbar() {
     position: relative;
     min-height: @navbar-height; // Ensure a navbar always shows (e.g., without a .navbar-brand in collapsed mode)
@@ -16,6 +31,11 @@
     .clearfix();
 }
 
+/**
+Base class for internal use only in `.navbar("fixed-*")`.
+
+@depends @zindex-navbar-fixed
+**/
 ._navbar-fixed() {
     position: fixed;
     right: 0;
@@ -24,6 +44,11 @@
     border-radius: 0;
 }
 
+/**
+Base class for internal use only in `.navbar("*")`.
+
+@depends #BL>._nav,@navbar-height,@line-height-computed,@navbar-link-color,@border-radius-base,@navbar-link-hover-color,@navbar-link-hover-bg,@navbar-link-active-color,@navbar-link-active-bg,@navbar-link-disabled-color,@navbar-link-disabled-bg
+**/
 ._navbar-nav() {
   // it requires to reset the UL settings, like class="nav navbar-nav"
   ._nav();
@@ -60,29 +85,22 @@
   }
 }
 
-._navbar-brand() {
-    display: block;
-    max-width: 200px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: @navbar-padding-vertical @navbar-padding-horizontal;
-    font-size: @font-size-large;
-    font-weight: 500;
-    line-height: @line-height-computed;
-    color: @navbar-brand-color;
-    text-align: center;
-
-    &:hover,
-    &:focus {
-        color: @navbar-brand-hover-color;
-        text-decoration: none;
-        background-color: @navbar-brand-hover-bg;
-    }
-}
-
 // --------------------------------------------------
 
+/**
+Substitute for `.navbar .navbar-(static|fixed)-(top|bottom)` CSS class combinations.
 
+**Usage:** Instead of: `<nav class="navbar navbar-fixed-top">`, just use `<nav>`
+and write your LESS:
+```
+nav {
+    .navbar("fixed-top");
+    // other CSS/LESS...
+}
+```
+
+@param type "static-top"|"fixed-top"|"fixed-bottom", or no argument for default
+**/
 .navbar(@type) when (@type = "static-top") {
     ._navbar();
     border-radius: 0;
@@ -96,9 +114,45 @@
     bottom: 0;
     margin-bottom: 0; // override .navbar defaults
 }
+.navbar() {
+    ._navbar();
+}
 
 
+/**
+Substitute of `.nav .navbar-nav` CSS class combination for navigation menus.
 
+**Usage:** Instead of:
+```
+<nav class="navbar navbar-static-top">
+    <ul class="nav navbar-nav">
+        <li><a href=""></a>
+        <li> ...
+    </ul>
+</nav>
+```
+just use:
+```
+<nav>
+    <ul>
+        <li><a href=""></a>
+        <li> ...
+    </ul>
+</nav>
+```
+and write your LESS:
+```
+nav {
+    .navbar("static-top");
+    // other CSS/LESS...
+    ul {
+        .navbar-nav(); // use "floating" in .less file for devices bigger than smartphones
+    }
+}
+```
+
+@param ver "floating", for horizontal list items
+**/
 .navbar-nav(@ver) when (@ver = "floating") {
     ._navbar-nav();
     float: left;
@@ -117,14 +171,3 @@
     ._navbar-nav();
 }
 
-
-.navbar-brand(@ver) when (@ver = "floating") {
-    ._navbar-brand();
-    float: left;
-    margin-left: -(@navbar-padding-horizontal);
-    margin-right: 5px;
-    max-width: none; // Disables the default mobile setting
-}
-.navbar-brand() {
-    ._navbar-brand();
-}
