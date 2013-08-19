@@ -1,8 +1,7 @@
 Bootless
 ========
 ```
-This is a work in progress, so please, hold your horses before you go and 
-tear it apart ;)
+This is a work in progress, so please, hold your horses before you go and tear it apart ;)
 ```
 The idea behind *Bootless* is to have the most of
 [Twitter Bootstrap](http://getbootstrap.org/) v3 without using its markup in 
@@ -31,7 +30,7 @@ And your LESS file would look like:
 // and somewhere later...
 @media (min-width: @screen-tablet) and (max-width: @screen-tablet-max) {
     #example {
-        .col(8);
+        #BL>.col(8);
     }
 }
 ```
@@ -50,7 +49,8 @@ Bootstrap already has `.make-row()` and `.make-*-column()` - why add new
 mixins for the same functionality?
 You are always allowed to use Bootstrap's mixins if you like them. I believe 
 however that if you use different .less files for different devices, it is 
-less ambiguaous to use one `.col()` mixin in them than differently named
+less ambiguaous to use one `.col()` (actually `#BL>.col()` since *Bootless*
+is using its own namespace) mixin in them than differently named
 `.make-*-column()` which also add their own media query inside.
 
 Bootstrap is not ready to use its classes as mixins in your LESS.
