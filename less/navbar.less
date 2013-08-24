@@ -16,7 +16,7 @@ nav {
 }
 ```
 
-@depends @navbar-height,@navbar-padding-horizontal,@navbar-bg,@navbar-border-radius
+@uses @navbar-height,@navbar-padding-horizontal,@navbar-bg,@navbar-border-radius,.clearfix()
 **/
 ._navbar() {
     position: relative;
@@ -34,7 +34,7 @@ nav {
 /**
 Base class for internal use only in `.navbar("fixed-*")`.
 
-@depends @zindex-navbar-fixed
+@uses @zindex-navbar-fixed
 **/
 ._navbar-fixed() {
     position: fixed;
@@ -47,7 +47,7 @@ Base class for internal use only in `.navbar("fixed-*")`.
 /**
 Base class for internal use only in `.navbar("*")`.
 
-@depends #BL>._nav,@navbar-height,@line-height-computed,@navbar-link-color,@border-radius-base,@navbar-link-hover-color,@navbar-link-hover-bg,@navbar-link-active-color,@navbar-link-active-bg,@navbar-link-disabled-color,@navbar-link-disabled-bg
+@uses #BL>._nav,@navbar-height,@line-height-computed,@navbar-link-color,@border-radius-base,@navbar-link-hover-color,@navbar-link-hover-bg,@navbar-link-active-color,@navbar-link-active-bg,@navbar-link-disabled-color,@navbar-link-disabled-bg
 **/
 ._navbar-nav() {
   // it requires to reset the UL settings, like class="nav navbar-nav"
