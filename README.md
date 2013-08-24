@@ -21,7 +21,7 @@ Instead you would just write:
 And your LESS file would look like:
 ```less
 #example {
-    .col(12);
+    #BL>.col(12);
     > a {
         .button("success");
     }
@@ -75,7 +75,7 @@ To learn about `.make-*-column()` and other Bootstrap mixins clone the
 ## Not only new mixins
 There is this one variable in Bootstrap called `@grid-gutter-width`. The 
 main thing it sets up is the padding on grid segments and the default value 
-is 30px. It is not a very welcome solution as it gives you a grid with very 
+is `30px`. It is not a very welcome solution as it gives you a grid with very 
 thick frames. Since Bootstrap changed its policy to
 `* { box-sizing: border-box; }` it would be much more welcome to work with a 
 grid that makes it much easier to place elements exactly where you want them.
