@@ -5,28 +5,28 @@
 /**
 Substitute for `.container` CSS class. Creates a centered container usually for `.row`-s.
 
-**Usage:** There are prebuilt containers for specific devices, eg `#BL>.container("tablet")`
-for `@media (min-width: @screen-tablet) and (max-width: @screen-tablet-max) { ... }`.
+**Usage:** There are prebuilt containers for specific devices, eg `#BL>.container("sm")`
+for `@media @mq-sm-to-md { ... }`.
 Since the `#BL>.col(@columns)` layout is fluid you can set up whatever container size you want,
 eg. `#BL>.container(500px)`, `#BL>.container(80%)`, even the
-`#BL>.container(@container-tablet)` if you do not like the string argument solution, or
+`#BL>.container(@container-sm)` if you do not like the string argument solution, or
 whatever unit size you wish to use.
 
-@param width "tablet"|"desktop"|"large-desktop"|standard unit width
-@depends @container-tablet,@container-desktop,@container-large-desktop
+@param width "sm"|"md"|"lg"|standard unit width
+@uses @container-sm,@container-md,@container-lg
 **/
-.container(@width) when (isstring(@width)) and (@width = "tablet") {
-    max-width: @container-tablet;
+.container(@width) when (isstring(@width)) and (@width = "sm") {
+    max-width: @container-sm;
     margin-left: auto;
     margin-right: auto;
 }
-.container(@width) when (isstring(@width)) and (@width = "desktop") {
-    max-width: @container-desktop;
+.container(@width) when (isstring(@width)) and (@width = "md") {
+    max-width: @container-md;
     margin-left: auto;
     margin-right: auto;
 }
-.container(@width) when (isstring(@width)) and (@width = "large-desktop") {
-    max-width: @container-large-desktop;
+.container(@width) when (isstring(@width)) and (@width = "lg") {
+    max-width: @container-lg;
     margin-left: auto;
     margin-right: auto;
 }
@@ -48,7 +48,7 @@ and it does not rely on CSS classes anymore. The only thing that is left is
 the clearfix. If you want to have the gutter revert to Bootstrap's
 `.make-row()` and `.make-*-column()` mixins.
 
-@depends .clearfix
+@uses .clearfix()
 **/
 .row() {
     // Then clear the floated columns
@@ -69,7 +69,7 @@ want to have it back revert to Bootstrap's `.make-*-column()` and
 `.make-row()` mixins.
 
 @param columns defines how wide the column spans, from 1 to `@grid-columns` (default 12)
-@depends @grid-columns
+@uses @grid-columns
 **/
 .col(@columns) when (isnumber(@columns)) and (@columns > 0) {
     position: relative;
@@ -85,7 +85,7 @@ This means an empty space on the left of your column. Counted the same as
 in generating columns.
 
 @param columns defines how wide the offset spans
-@depends @grid-columns
+@uses @grid-columns
 **/
 .col-offset(@columns) when (@columns > 0) {
     margin-left: percentage((@columns / @grid-columns));
@@ -97,7 +97,7 @@ of the column. When used with `.col-pull()` mixin you can change position of col
 for the user inspite of their position in DOM.
 
 @param columns defines how many columns should this column be pushed to the right side
-@depends @grid-columns
+@uses @grid-columns
 @see #BL>.col-pull()
 **/
 .col-push(@columns) when (@columns > 0) {
@@ -110,7 +110,7 @@ of the column. When used with `.col-push()` mixin you can change position of col
 for the user inspite of their position in DOM.
 
 @param columns defines how many columns should this column be pulled to the left side
-@depends @grid-columns
+@uses @grid-columns
 @see #BL>.col-push()
 **/
 .col-pull(@columns) when (@columns > 0) {
